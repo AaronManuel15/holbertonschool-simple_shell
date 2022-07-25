@@ -23,6 +23,7 @@ char *_which(char *);
 char *_getenv(const char *name);
 int delimcount(char *buffer);
 path_t *add_path_node(path_t **head, const char *str);
+path_t *getpath(void);
 
 /* Strings */
 int _strcmp(char *s1, char *s2);
