@@ -14,16 +14,20 @@ extern char **environ;
 
 typedef struct path
 {
-    char *directory;
-    struct path *nextdir;
+	char *directory;
+	struct path *nextdir;
 } path_t;
 
+/* Environment */
 char *_which(char *);
 char *_getenv(const char *name);
 int delimcount(char *buffer);
 path_t *add_path_node(path_t **head, const char *str);
 
+/* Strings */
 int _strcmp(char *s1, char *s2);
 int _strncmp(char *s1, char *s2, int n);
+char *_strdup(char *str);
+char *copycat(char *s1, char *s2);
 
 #endif
