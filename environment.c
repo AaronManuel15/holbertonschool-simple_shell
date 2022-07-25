@@ -80,6 +80,11 @@ int delimcount(char *buffer)
 	return (count);
 }
 
+/**
+ * getpath - creates a linkedlist of each location in PATH
+ * Return: head of list
+ */
+
 path_t *getpath(void)
 {
 	char *pathString = _getenv("PATH");
@@ -92,4 +97,29 @@ path_t *getpath(void)
 		add_path_node(head, token);
 	}
 	return (head);
+}
+
+/**
+ * _which - searches is the command in token exists anywhere in linked list
+ * @token: command given from user
+ * @head: head of linked list
+ * Return: original command with it's address or NULL
+ */
+
+char *_which(char *token, path_t *head)
+{
+	path_t *ptrCopy = head;
+	char *command = copycat("/", token), *exec;
+
+	while (ptrCopy)
+	{
+		exec = copycat(ptrCopy->directory, command);
+		if (stat(exec, &st) == 0)
+		{
+			free(command);
+			return (exec);
+		}
+		ptrCopy = ptrCopy->nextdir;
+	}
+	return (NULL);
 }

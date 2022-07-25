@@ -19,7 +19,7 @@ typedef struct path
 } path_t;
 
 /* Environment */
-char *_which(char *);
+char *_which(char *token, path_t *head);
 char *_getenv(const char *name);
 int delimcount(char *buffer);
 path_t *add_path_node(path_t **head, const char *str);
