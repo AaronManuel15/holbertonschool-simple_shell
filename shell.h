@@ -30,5 +30,10 @@ int _strcmp(char *s1, char *s2);
 int _strncmp(char *s1, char *s2, int n);
 char *_strdup(char *str);
 char *copycat(char *s1, char *s2);
+int _strlen(char *);
+
+/* Console functions */
+char **user_console(void);
+char **parse_input(char *str);
 
 #endif
