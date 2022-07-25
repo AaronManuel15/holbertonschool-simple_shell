@@ -8,20 +8,20 @@
 
 char *_getenv(const char *name)
 {
-	int i = 0, len = strlen(name);
-	char *fail = "(null)", *copy;
+	int i = 0, len = _strlen(name);
+	char *copy;
 
 	while (environ[i])
 	{
-		if (strncmp(name, environ[i], len) == 0)
+		if (_strncmp(name, environ[i], len) == 0)
 		{
-			copy = strdup(environ[i]);
+			copy = _strdup(environ[i]);
 			copy += ++len;
 			return (copy);
 		}
 		i++;
 		}
-	return (fail);
+	return (NULL);
 }
 
 /**
@@ -43,7 +43,7 @@ path_t *add_path_node(path_t **head, const char *str)
 		free(new);
 		return (NULL);
 	}
-	new->directory = strdup(str);
+	new->directory = _strdup(str);
 	new->nextdir = NULL;
 
 	if (!(*head))
@@ -78,4 +78,18 @@ int delimcount(char *buffer)
 	}
 	count += 2;
 	return (count);
+}
+
+path_t *getpath(void)
+{
+	char *pathString = _getenv("PATH");
+	char *token = strtok(pathString, ':');
+	path_t *head = add_path_node(head, token);
+
+	while (token)
+	{
+		token = strtok(NULL, ':');
+		add_path_node(head, token);
+	}
+	return (head);
 }
