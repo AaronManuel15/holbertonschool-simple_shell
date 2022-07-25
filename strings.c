@@ -68,19 +68,20 @@ int _strncmp(char *s1, char *s2, int n)
 char *_strdup(char *str)
 {
 	char *cpy;
-	int i, strlen = 0;
+	int i, len;
 
 	if (str == NULL)
 		return (NULL);
-	for (i = 0; str[i]; i++)
-		strlen++;
 
-	cpy = malloc(strlen + 1);
+	len = _strlen(str);
+
+	cpy = malloc(len + 1);
 	if (cpy == NULL)
 		return (NULL);
 
 	for (i = 0; str[i]; i++)
 		cpy[i] = str[i];
+	cpy[i] = '\0';
 
 	return (cpy);
 }
