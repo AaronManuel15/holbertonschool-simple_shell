@@ -24,10 +24,8 @@ int main(int argc, char *argv[])
 			args = non_interactive_mode();
 			break;
 		}
-			
 		isKid = fork();
 	}
-
 	if (isKid == -1)
 		perror("Error");
 	if (argc > 1)
@@ -42,8 +40,6 @@ int main(int argc, char *argv[])
 			i++;
 		}
 	}
-
-	
 	/* Test section */
 	i = 0;
 	while (i < 2)
@@ -52,7 +48,6 @@ int main(int argc, char *argv[])
 		i++;
 	}
 	/* End test section */
-	
 	freeargs(args);
 	return (0);
 }

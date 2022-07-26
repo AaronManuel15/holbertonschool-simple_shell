@@ -13,7 +13,7 @@ char **user_console(void)
 
 	write(STDIN_FILENO, "($) ", 4);
 	count = getline(&buffer, &buffsize, stdin);
-	
+
 	if (count == EOF)
 	{
 		write(0, "exit\n", 5);
