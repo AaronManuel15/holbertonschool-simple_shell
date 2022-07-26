@@ -1,0 +1,74 @@
+.Dd 07/26/2022
+.Dt Shell
+.Os UBUNTU 20.04 LTS
+.Sh NAME
+.Nm hsh
+.Nd Holberton School formatted command line interpreter "Shell"
+.Sh SYNOPSIS
+.Nm #include "shell.h"
+.Pp
+.Nm ./hsh
+.Ar [commmand [-commmand options]]
+.Sh DESCRIPTION
+The
+.Nm
+function is an emulation of the bash sh command line interpreter written in C. 
+.Pp
+The
+.Nm
+function takes commmands from
+.Ar stdin
+in an interactive or non-interactive way, executes them, and, respectively, 
+returns to the prompt or closes the shell.
+.Pp
+.Sh Format of the command line
+.Pp
+The
+.Ar command line
+shown as 
+.Ar [commmand [-commmand options]]
+will take any commands along with options and referenced files. 
+.Sh Examples
+.Pp
+The following examples show the three ways to utilize 
+.Nm
+between interactive and non-interactive mode.
+.Pp
+
+In your linux terminal, running ./hsh will open a prompt to act as new command line.
+.Pp
+
+.Nm ./hsh
+.Pp
+.Nm ($) cat helloworld.txt
+.Pp
+hello world.
+.Pp
+.Nm ($) exit
+.Pp
+
+Executing with arguments and piping to 
+.Nm
+also works.
+.Pp
+
+.Nm ./hsh cat helloworld.txt 
+.Pp
+hello world
+.Pp
+
+.Nm cat helloworld.txt | ./hsh
+.Pp
+hello world
+
+.Pp
+
+All examples above assume the helloworld.txt file contains the text "hello world".
+.El
+.Pp
+.Sh RETURN VALUE
+When the
+.Nm
+function executes, the function returns the exit status of the executable called. 
+.Sh NOTES
+We've done our best to mimic the functionality of bash shell. 
