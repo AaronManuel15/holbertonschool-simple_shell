@@ -6,7 +6,7 @@
  * Return: copy of environ item upon success. value of fail upon failure
  */
 
-char *_getenv(const char *name)
+char *_getenv(char *name)
 {
 	int i = 0, len = _strlen(name);
 	char *copy;
@@ -31,7 +31,7 @@ char *_getenv(const char *name)
  * Return: address of new element upon success. NULL if failed.
  */
 
-path_t *add_path_node(path_t **head, const char *str)
+path_t *add_path_node(path_t **head, char *str)
 {
 	path_t *new, *ptrCopy;
 
@@ -55,7 +55,7 @@ path_t *add_path_node(path_t **head, const char *str)
 
 		ptrCopy->nextdir = new;
 	}
-	return (head);
+	return (*head);
 }
 
 /**
@@ -88,13 +88,13 @@ int delimcount(char *buffer)
 path_t *getpath(void)
 {
 	char *pathString = _getenv("PATH");
-	char *token = strtok(pathString, ':');
-	path_t *head = add_path_node(head, token);
+	char *token = strtok(pathString, ":");
+	path_t *head = add_path_node(&head, token);
 
 	while (token)
 	{
-		token = strtok(NULL, ':');
-		add_path_node(head, token);
+		token = strtok(NULL, ":");
+		add_path_node(&head, token);
 	}
 	return (head);
 }
@@ -110,6 +110,7 @@ char *_which(char *token, path_t *head)
 {
 	path_t *ptrCopy = head;
 	char *command = copycat("/", token), *exec;
+	struct stat st;
 
 	while (ptrCopy)
 	{
