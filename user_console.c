@@ -24,6 +24,8 @@ char **user_console(void)
 
 	if (_strcmp(args[0], "exit") == 0)
 	{
+		free(args[0]);
+		free(args);
 		write(1, "exit\n", 5);
 		exit(0);
 	}
