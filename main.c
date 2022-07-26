@@ -8,7 +8,7 @@
  * Return: always 0
  */
 
-int main(int argc, char *argv[], char **env)
+int main(int argc, char *argv[])
 {
 	char **args;
 	int i = 0;
@@ -24,10 +24,8 @@ int main(int argc, char *argv[], char **env)
 			args = non_interactive_mode();
 			break;
 		}
-			
 		isKid = fork();
 	}
-
 	if (isKid == -1)
 		perror("Error");
 	if (argc > 1)
@@ -42,8 +40,6 @@ int main(int argc, char *argv[], char **env)
 			i++;
 		}
 	}
-
-	
 	/* Test section */
 	i = 0;
 	while (i < 2)
@@ -52,7 +48,6 @@ int main(int argc, char *argv[], char **env)
 		i++;
 	}
 	/* End test section */
-	
 	freeargs(args);
 	return (0);
 }
@@ -60,7 +55,7 @@ int main(int argc, char *argv[], char **env)
 char **non_interactive_mode(void)
 {
 	char *buffer = NULL, **args;
-	ssize_t buffsize = 0;
+	size_t buffsize = 0;
 
 	getline(&buffer, &buffsize, stdin);
 

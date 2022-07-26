@@ -20,9 +20,9 @@ typedef struct path
 
 /* Environment */
 char *_which(char *token, path_t *head);
-char *_getenv(const char *name);
+char *_getenv(char *name);
 int delimcount(char *buffer);
-path_t *add_path_node(path_t **head, const char *str);
+path_t *add_path_node(path_t **head, char *str);
 path_t *getpath(void);
 
 /* Strings */
@@ -37,5 +37,5 @@ char **user_console(void);
 char **non_interactive_mode(void);
 char **parse_input(char *str);
 void freeargs(char **args);
-
+void printenv(void);
 #endif
