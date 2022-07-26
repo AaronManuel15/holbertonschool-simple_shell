@@ -12,15 +12,30 @@ int main(int argc, char *argv[], char **env)
 {
 	char **args;
 	int i = 0;
+	int isKid = 1, status;
 
-	if (isatty(STDIN_FILENO) != 0)
-		args = user_console();
-
-	while (args[i] != NULL)
+	while (isKid != 0)
 	{
-		printf("input: %s\n", args[i]);
-		i++;
+		wait(&status);
+		if (isatty(STDIN_FILENO) != 0)
+			args = user_console();
+		isKid = fork();
 	}
 
+	if (isKid == -1)
+		perror("Error");
+	
+	/* Test section */
+	if (isKid == 0)
+	{
+		while (args[i] != NULL)
+		{
+			printf("%s\n", args[i]);
+			i++;
+		}
+	}
+	/* End test section */
+	
+	free(args);
 	return (0);
 }
