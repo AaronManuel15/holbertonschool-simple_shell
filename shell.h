@@ -32,8 +32,10 @@ char *_strdup(char *str);
 char *copycat(char *s1, char *s2);
 int _strlen(char *);
 
-/* Console functions */
+/* Main functions */
 char **user_console(void);
+char **non_interactive_mode(void);
 char **parse_input(char *str);
+void freeargs(char **args);
 
 #endif

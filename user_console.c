@@ -13,12 +13,23 @@ char **user_console(void)
 
 	write(STDIN_FILENO, "($) ", 4);
 	count = getline(&buffer, &buffsize, stdin);
-
+	
 	if (count == EOF)
+	{
+		write(0, "exit\n", 5);
 		exit(0);
+	}
 
 	args = parse_input(buffer);
-	free(buffer);
+
+	if (_strcmp(args[0], "exit") == 0)
+	{
+		free(args[0]);
+		free(args);
+		write(1, "exit\n", 5);
+		exit(0);
+	}
+
 	return (args);
 }
 
@@ -61,7 +72,7 @@ char **parse_input(char *str)
 		token = strtok(NULL, " ");
 		count++;
 	}
-
+	free(str);
 	free(strCpy);
 	return (tokens);
 }
