@@ -38,4 +38,7 @@ char **non_interactive_mode(void);
 char **parse_input(char *str);
 void freeargs(char **args);
 void printenv(void);
+
+/* Error and Freeing functions */
+void error(char *filename, int lineno, char *argument);
 #endif
