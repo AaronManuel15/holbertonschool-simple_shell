@@ -60,7 +60,7 @@ int main(int argc, char *argv[], char **env)
 char **non_interactive_mode(void)
 {
 	char *buffer = NULL, **args;
-	ssize_t buffsize = 0;
+	size_t buffsize = 0;
 
 	getline(&buffer, &buffsize, stdin);
 

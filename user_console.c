@@ -8,7 +8,7 @@
 char **user_console(void)
 {
 	char *buffer = NULL, **args;
-	ssize_t buffsize = 0;
+	size_t buffsize = 0;
 	int count;
 
 	write(STDIN_FILENO, "($) ", 4);
