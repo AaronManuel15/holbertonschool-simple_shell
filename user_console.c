@@ -29,6 +29,11 @@ char **user_console(void)
 		write(1, "exit\n", 5);
 		exit(0);
 	}
+	if (_strcmp(args[0], "env") == 0)
+	{
+		printenv();
+		return (NULL);
+	}
 
 	return (args);
 }
@@ -75,4 +80,16 @@ char **parse_input(char *str)
 	free(str);
 	free(strCpy);
 	return (tokens);
+}
+
+void printenv()
+{
+	int i, len;
+
+	for (i = 0; environ[i]; i++)
+	{
+		len = _strlen(environ[i]);
+		write(1, environ[i], len);
+		write(1, "\n", 1);
+	}
 }
