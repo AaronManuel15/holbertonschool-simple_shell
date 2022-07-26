@@ -16,7 +16,7 @@ char **user_console(void)
 
 	if (count == EOF)
 	{
-		write(0, "exit\n", 5);
+		write(STDOUT_FILENO, "\n", 1);
 		exit(0);
 	}
 
@@ -26,7 +26,6 @@ char **user_console(void)
 	{
 		free(args[0]);
 		free(args);
-		write(1, "exit\n", 5);
 		exit(0);
 	}
 	if (_strcmp(args[0], "env") == 0)
@@ -82,14 +81,14 @@ char **parse_input(char *str)
 	return (tokens);
 }
 
-void printenv()
+void printenv(void)
 {
 	int i, len;
 
 	for (i = 0; environ[i]; i++)
 	{
 		len = _strlen(environ[i]);
-		write(1, environ[i], len);
-		write(1, "\n", 1);
+		write(STDOUT_FILENO, environ[i], len);
+		write(STDOUT_FILENO, "\n", 1);
 	}
 }

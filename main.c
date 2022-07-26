@@ -4,16 +4,16 @@
  * main - Initializes shell functions
  * @argc: Number of arguments passed to function
  * @argv: Array of args
- * @env: Array of environmental variables
  * Return: always 0
  */
 
 int main(int argc, char *argv[])
 {
+	path_t *path;
 	char **args;
-	int i = 0;
-	int isKid = 1, status;
+	int i = 0, isKid = 1, status;
 
+	path = getpath();
 	while ((isKid != 0) && (argc == 1))
 	{
 		wait(&status);
@@ -22,8 +22,17 @@ int main(int argc, char *argv[])
 		else
 		{
 			args = non_interactive_mode();
+			args[0] = _strdup(_which(args[0], path));
 			break;
 		}
+		args[0] = _strdup(_which(args[0], path));
+		if (_strcmp(args[0], "(nil)") == 0)
+		{
+			perror("error");
+			continue;
+		}
+		if (args[0] == NULL)
+			continue;
 		isKid = fork();
 	}
 	if (isKid == -1)
@@ -39,14 +48,13 @@ int main(int argc, char *argv[])
 			args[i] = _strdup(argv[i + 1]);
 			i++;
 		}
+		args[0] = _strdup(_which(args[0], path));
 	}
+
 	/* Test section */
-	i = 0;
-	while (i < 2)
-	{
-		printf("%s\n", args[i]);
-		i++;
-	}
+	printf("Attempting to execute %s\n", args[0]);
+	if (execve(args[0], args, NULL) == -1)
+		perror("error");
 	/* End test section */
 	freeargs(args);
 	return (0);
