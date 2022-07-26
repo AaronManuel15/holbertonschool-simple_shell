@@ -10,9 +10,13 @@
 void error(char *filename, int lineno, char *argument)
 {
 	char *errorStr;
+	char num[1];
+
+	num[0] = lineno + 48;
+	num[1] = '\0';
 
 	errorStr = copycat(filename, ": ");
-	errorStr = copycat(errorStr, lineno);
+	errorStr = copycat(errorStr, num);
 	errorStr = copycat(errorStr, ": ");
 	errorStr = copycat(errorStr, argument);
 

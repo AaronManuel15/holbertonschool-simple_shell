@@ -122,5 +122,5 @@ char *_which(char *token, path_t *head)
 		}
 		ptrCopy = ptrCopy->nextdir;
 	}
-	return ("(nil)");
+	return (NULL);
 }
