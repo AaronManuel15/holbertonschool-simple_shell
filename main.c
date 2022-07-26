@@ -11,28 +11,28 @@ int main(int argc, char *argv[])
 {
 	path_t *path;
 	char **args;
-	int i = 0, isKid = 1, status;
+	char *filepath;
+	int i = 0, isKid = 1, status, lineno = 0;
 
 	path = getpath();
 	while ((isKid != 0) && (argc == 1))
 	{
 		wait(&status);
+		lineno++;
 		if (isatty(STDIN_FILENO) != 0)
 			args = user_console();
 		else
 		{
 			args = non_interactive_mode();
-			args[0] = _strdup(_which(args[0], path));
+			filepath = _strdup(_which(args[0], path));
 			break;
 		}
-		args[0] = _strdup(_which(args[0], path));
-		if (_strcmp(args[0], "(nil)") == 0)
+		filepath = _strdup(_which(args[0], path));
+		if (filepath == NULL)
 		{
-			perror("error");
+			error(argv[0], lineno, args[0]);
 			continue;
 		}
-		if (args[0] == NULL)
-			continue;
 		isKid = fork();
 	}
 	if (isKid == -1)
@@ -48,12 +48,12 @@ int main(int argc, char *argv[])
 			args[i] = _strdup(argv[i + 1]);
 			i++;
 		}
-		args[0] = _strdup(_which(args[0], path));
+		filepath = _strdup(_which(args[0], path));
 	}
 
 	/* Test section */
 	printf("Attempting to execute %s\n", args[0]);
-	if (execve(args[0], args, NULL) == -1)
+	if (execve(filepath, args, NULL) == -1)
 		perror("error");
 	/* End test section */
 	freeargs(args);
