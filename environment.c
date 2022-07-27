@@ -113,15 +113,16 @@ char *_which(char *token, path_t *head)
 	path_t *ptrCopy = head;
 	char *command = copycat("/", token), *exec;
 	struct stat st;
-
+	
+	exec = token;
 	while (ptrCopy)
 	{
-		exec = copycat(ptrCopy->directory, command);
 		if (stat(exec, &st) == 0)
 		{
 			free(command);
 			return (exec);
 		}
+		exec = copycat(ptrCopy->directory, command);
 		ptrCopy = ptrCopy->nextdir;
 	}
 	return (NULL);

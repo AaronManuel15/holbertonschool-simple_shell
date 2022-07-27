@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 		wait(&status);
 		if (isatty(STDIN_FILENO) != 0)
 			args = user_console();
-		while (isatty(STDIN_FILENO) == 0)
+		if (isatty(STDIN_FILENO) == 0)
 		{
 			args = non_interactive_mode();
 			filepath = _strdup(_which(args[0], path));
