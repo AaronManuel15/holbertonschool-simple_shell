@@ -15,24 +15,23 @@ int main(int argc, char *argv[])
 	int i = 0, isKid = 1, status, lineno = 0;
 
 	path = getpath();
-	while ((isKid != 0) && (argc == 1))
+	for (lineno = 0; (isKid != 0) && (argc == 1); lineno++)
 	{
 		wait(&status);
-		lineno++;
 		if (isatty(STDIN_FILENO) != 0)
 			args = user_console();
 		else
 		{
 			args = non_interactive_mode();
+			if (args == NULL)
+				continue;
 			filepath = _strdup(_which(args[0], path));
 			break;
 		}
-		filepath = _strdup(_which(args[0], path));
-		if (filepath == NULL)
-		{
-			error(argv[0], lineno, args[0]);
+		if (args == NULL)
 			continue;
-		}
+		filepath = _strdup(_which(args[0], path));
+			
 		isKid = fork();
 	}
 	if (isKid == -1)
@@ -50,12 +49,16 @@ int main(int argc, char *argv[])
 		}
 		filepath = _strdup(_which(args[0], path));
 	}
+	if (filepath == NULL)
+	{
+		errno = q
+		error(argv[0], lineno, args[0]);
+		return (0);
+	}
 
-	/* Test section */
 	printf("Attempting to execute %s\n", args[0]);
 	if (execve(filepath, args, NULL) == -1)
-		perror("error");
-	/* End test section */
+		error(argv[0], lineno, args[0]);
 	freeargs(args);
 	return (0);
 }
@@ -67,7 +70,8 @@ char **non_interactive_mode(void)
 
 	getline(&buffer, &buffsize, stdin);
 
-	args = parse_input(buffer);
+	args = parse_user_input(buffer);
+
 	return (args);
 }
 

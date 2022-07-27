@@ -19,8 +19,13 @@ char **user_console(void)
 		write(STDOUT_FILENO, "\n", 1);
 		exit(0);
 	}
+	
+	if (_strcmp(buffer, "\n") == 0)
+		return (NULL);
 
-	args = parse_input(buffer);
+	args = parse_user_input(buffer);
+	if (args == NULL)
+		return (NULL);
 
 	if (_strcmp(args[0], "exit") == 0)
 	{
@@ -28,12 +33,7 @@ char **user_console(void)
 		free(args);
 		exit(0);
 	}
-	if (_strcmp(args[0], "env") == 0)
-	{
-		printenv();
-		return (NULL);
-	}
-
+	
 	return (args);
 }
 
@@ -43,7 +43,7 @@ char **user_console(void)
  * Return: parsed string
  */
 
-char **parse_input(char *str)
+char **parse_user_input(char *str)
 {
 	char **tokens, *token;
 	char *strCpy = _strdup(str);
@@ -66,7 +66,7 @@ char **parse_input(char *str)
 		token = strtok(NULL, " ");
 	}
 
-	tokens = malloc(sizeof(*tokens) * count);
+	tokens = malloc(sizeof(*tokens) * (count + 1));
 
 	count = 0;
 	token = strtok(strCpy, " ");
@@ -76,6 +76,8 @@ char **parse_input(char *str)
 		token = strtok(NULL, " ");
 		count++;
 	}
+
+
 	free(str);
 	free(strCpy);
 	return (tokens);
