@@ -18,27 +18,32 @@ typedef struct path
 	struct path *nextdir;
 } path_t;
 
-/* Environment */
+/* Environment file */
 char *_which(char *token, path_t *head);
 char *_getenv(char *name);
 int delimcount(char *buffer);
 path_t *add_path_node(path_t **head, char *str);
 path_t *getpath(void);
 
-/* Strings */
+/* Strings file */
 int _strcmp(char *s1, char *s2);
 int _strncmp(char *s1, char *s2, int n);
 char *_strdup(char *str);
 char *copycat(char *s1, char *s2);
 int _strlen(char *);
 
-/* Main functions */
+/* Main file */
+void printenv(void);
+void executer(char *filepath, char *filename, char **args, int lineno);
+
+/* Console file */
 char **user_console(void);
-char **non_interactive_mode(void);
-char **parse_input(char *str);
-void freeargs(char **args);
+char **parse_user_input(char *str);
 void printenv(void);
 
-/* Error and Freeing functions */
+/* Error and Free file */
 void error(char *filename, int lineno, char *argument);
+char *intstr(int num);
+void freedouble(char **arr);
+
 #endif
