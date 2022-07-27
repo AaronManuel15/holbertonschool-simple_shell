@@ -89,7 +89,9 @@ path_t *getpath(void)
 {
 	char *pathString = _getenv("PATH");
 	char *token = strtok(pathString, ":");
-	path_t *head = add_path_node(&head, token);
+	path_t *head = NULL;
+
+	head = add_path_node(&head, token);
 
 	while (token)
 	{

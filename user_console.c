@@ -33,6 +33,13 @@ char **user_console(void)
 		free(args);
 		exit(0);
 	}
+	if (_strcmp(args[0], "env") == 0)
+	{
+		free(args[0]);
+		free(args);
+		printenv();
+		return (NULL);
+	}
 	
 	return (args);
 }

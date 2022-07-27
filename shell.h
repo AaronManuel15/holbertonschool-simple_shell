@@ -36,11 +36,12 @@ int _strlen(char *);
 char **user_console(void);
 char **non_interactive_mode(void);
 char **parse_user_input(char *str);
-void freeargs(char **args);
 void printenv(void);
+void executer(char *filepath, char* filename, char **args, int lineno);
 
 /* Error and Freeing functions */
 void error(char *filename, int lineno, char *argument);
 char *intstr(int num);
+void freedouble(char **args);
 
 #endif
