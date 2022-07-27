@@ -55,6 +55,7 @@ path_t *add_path_node(path_t **head, char *str)
 
 		ptrCopy->nextdir = new;
 	}
+
 	return (*head);
 }
 
@@ -119,7 +120,6 @@ char *_which(char *token, path_t *head)
 	{
 		if (stat(exec, &st) == 0)
 		{
-			free(command);
 			return (exec);
 		}
 		exec = copycat(ptrCopy->directory, command);
