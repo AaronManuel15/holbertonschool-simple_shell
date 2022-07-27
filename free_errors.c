@@ -56,11 +56,16 @@ char *intstr(int num)
 	return (output);
 }
 
-void freedouble(char **args)
-{
-        int i;
+/**
+ * freedouble - frees a 2d array
+ * @arr: array to free
+ */
 
-        for (i = 0; args[i]; i++)
-                free(args[i]);
-        free(args);
+void freedouble(char **arr)
+{
+	int i;
+
+	for (i = 0; arr[i]; i++)
+		free(args[i]);
+	free(args);
 }

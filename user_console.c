@@ -11,36 +11,24 @@ char **user_console(void)
 	size_t buffsize = 0;
 	int count;
 
-	write(STDIN_FILENO, "($) ", 4);
+	if (isatty(STDIN_FILENO) != 0)
+		write(STDIN_FILENO, "($) ", 4);
+
 	count = getline(&buffer, &buffsize, stdin);
 
 	if (count == EOF)
 	{
-		write(STDOUT_FILENO, "\n", 1);
+		if (isatty(STDIN_FILENO) != 0)
+			write(STDOUT_FILENO, "\n", 1);
 		exit(0);
 	}
-	
+
 	if (_strcmp(buffer, "\n") == 0)
 		return (NULL);
 
 	args = parse_user_input(buffer);
-	if (args == NULL)
-		return (NULL);
+	args = built_ins(args);
 
-	if (_strcmp(args[0], "exit") == 0)
-	{
-		free(args[0]);
-		free(args);
-		exit(0);
-	}
-	if (_strcmp(args[0], "env") == 0)
-	{
-		free(args[0]);
-		free(args);
-		printenv();
-		return (NULL);
-	}
-	
 	return (args);
 }
 
@@ -89,6 +77,38 @@ char **parse_user_input(char *str)
 	free(strCpy);
 	return (tokens);
 }
+
+/**
+ * built_ins - built-in commands that do not exist in the path
+ * @args: argument to check for built-ins
+ * Return: NULL if built in found, else argument pointer
+ */
+
+char **built_ins(char **args)
+{
+	if (args == NULL)
+		return (NULL);
+
+	if (_strcmp(args[0], "exit") == 0)
+	{
+		free(args[0]);
+		free(args);
+		exit(0);
+	}
+	if (_strcmp(args[0], "env") == 0)
+	{
+		free(args[0]);
+		free(args);
+		printenv();
+		return (NULL);
+	}
+
+	return (args);
+}
+
+/**
+ * printenv - prints current environment when called
+ */
 
 void printenv(void)
 {

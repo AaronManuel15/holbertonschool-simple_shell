@@ -18,15 +18,10 @@ int main(int argc, char *argv[])
 	for (lineno = 1; (isKid != 0) && (argc == 1); lineno++)
 	{
 		wait(&status);
-		if (isatty(STDIN_FILENO) != 0)
-			args = user_console();
-		if (isatty(STDIN_FILENO) == 0)
-		{
-			args = non_interactive_mode();
-			filepath = _strdup(_which(args[0], path));
-		}
+		args = user_console();
 		if (args == NULL)
 			continue;
+
 		filepath = _strdup(_which(args[0], path));
 		isKid = fork();
 	}
@@ -45,13 +40,21 @@ int main(int argc, char *argv[])
 		}
 		filepath = _strdup(_which(args[0], path));
 	}
-
 	executer(filepath, argv[0], args, lineno);
-
 	free(filepath);
 	freedouble(args);
 	return (0);
 }
+
+/**
+ * executer - executes files in the path
+ * @filepath: filepath to execute
+ * @filename: name of program in argv[0]
+ *	(used for error handling)
+ * @args: double array containing flags and arguments for filepath
+ * @lineno: number of commands that have been entered to the shell
+ *	(used for error handling)
+ */
 
 void executer(char *filepath, char *filename, char **args, int lineno)
 {
@@ -65,25 +68,6 @@ void executer(char *filepath, char *filename, char **args, int lineno)
 	if (execve(filepath, args, NULL) == -1)
 		error(filename, lineno, args[0]);
 }
-
-char **non_interactive_mode(void)
-{
-	char *buffer = NULL, **args;
-	size_t buffsize = 0;
-	int count;
-
-	count = getline(&buffer, &buffsize, stdin);
-	
-	if (count == EOF)
-		exit(0);
-
-	args = parse_user_input(buffer);
-
-	return (args);
-}
-
-
-
 
 
 
