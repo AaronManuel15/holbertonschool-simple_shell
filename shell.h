@@ -40,6 +40,7 @@ void executer(char *filepath, char *filename, char **args, int lineno);
 char **user_console(void);
 char **parse_user_input(char *str);
 void printenv(void);
+char **built_ins(char **args);
 
 /* Error and Free file */
 void error(char *filename, int lineno, char *argument);

@@ -64,7 +64,6 @@ void executer(char *filepath, char *filename, char **args, int lineno)
 		exit(0);
 	}
 
-	printf("Attempting to execute %s\n", args[0]);
 	if (execve(filepath, args, NULL) == -1)
 		error(filename, lineno, args[0]);
 }
