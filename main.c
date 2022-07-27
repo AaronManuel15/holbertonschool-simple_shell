@@ -20,11 +20,9 @@ int main(int argc, char *argv[])
 		wait(&status);
 		if (isatty(STDIN_FILENO) != 0)
 			args = user_console();
-		else
+		while (isatty(STDIN_FILENO) == 0)
 		{
 			args = non_interactive_mode();
-			if (args == NULL)
-				continue;
 			filepath = _strdup(_which(args[0], path));
 			break;
 		}
@@ -56,7 +54,7 @@ int main(int argc, char *argv[])
 	return (0);
 }
 
-void executer(char *filepath, char* filename, char **args, int lineno)
+void executer(char *filepath, char *filename, char **args, int lineno)
 {
 	if (filepath == NULL)
 	{
@@ -79,15 +77,6 @@ char **non_interactive_mode(void)
 	args = parse_user_input(buffer);
 
 	return (args);
-}
-
-void freedouble(char **args)
-{
-	int i;
-
-	for (i = 0; args[i]; i++)
-		free(args[i]);
-	free(args);
 }
 
 

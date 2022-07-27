@@ -83,7 +83,7 @@ char **parse_user_input(char *str)
 		token = strtok(NULL, " ");
 		count++;
 	}
-
+	tokens[count] = NULL;
 
 	free(str);
 	free(strCpy);
