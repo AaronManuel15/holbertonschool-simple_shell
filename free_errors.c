@@ -66,6 +66,6 @@ void freedouble(char **arr)
 	int i;
 
 	for (i = 0; arr[i]; i++)
-		free(args[i]);
-	free(args);
+		free(arr[i]);
+	free(arr);
 }
