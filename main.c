@@ -24,7 +24,6 @@ int main(int argc, char *argv[])
 		{
 			args = non_interactive_mode();
 			filepath = _strdup(_which(args[0], path));
-			break;
 		}
 		if (args == NULL)
 			continue;
@@ -71,8 +70,12 @@ char **non_interactive_mode(void)
 {
 	char *buffer = NULL, **args;
 	size_t buffsize = 0;
+	int count;
 
-	getline(&buffer, &buffsize, stdin);
+	count = getline(&buffer, &buffsize, stdin);
+	
+	if (count == EOF)
+		exit(0);
 
 	args = parse_user_input(buffer);
 
