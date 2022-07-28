@@ -12,6 +12,12 @@
 
 extern char **environ;
 
+/**
+ * struct path - struct for building the PATH
+ * @directory: the string of the directory
+ * @nextdir: pointer to next node
+ * Return: 0
+ */
 typedef struct path
 {
 	char *directory;
