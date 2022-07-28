@@ -11,13 +11,13 @@ char **user_console(void)
 	size_t buffsize = 0;
 	int count, status;
 	pid_t isKid = 1;
-	
+
 	while (isKid != 0)
 	{
 		wait(&status);
 		if (isatty(STDIN_FILENO) != 0)
 			write(STDIN_FILENO, "($) ", 4);
-	
+
 		count = getline(&buffer, &buffsize, stdin);
 		if (count == EOF)
 		{
@@ -32,8 +32,7 @@ char **user_console(void)
 	}
 
 	args = parse_user_input(buffer);
-/*	args = built_ins(args);
-*/
+
 	return (args);
 }
 
