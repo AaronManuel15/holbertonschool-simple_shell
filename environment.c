@@ -55,8 +55,6 @@ path_t *add_path_node(path_t **head, char *str)
 
 		ptrCopy->nextdir = new;
 	}
-	free(new->directory);
-	free(new);
 	return (*head);
 }
 
