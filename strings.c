@@ -77,7 +77,10 @@ char *_strdup(char *str)
 
 	cpy = malloc(len + 1);
 	if (cpy == NULL)
+	{
+		free(cpy);
 		return (NULL);
+	}
 
 	for (i = 0; str[i]; i++)
 		cpy[i] = str[i];

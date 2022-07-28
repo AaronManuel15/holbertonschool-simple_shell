@@ -7,7 +7,7 @@
  * Return: always 0
  */
 
-int main(int argc, char *argv[])
+/*int main(int argc, char *argv[])
 {
 	path_t *path;
 	char **args;
@@ -48,6 +48,17 @@ int main(int argc, char *argv[])
 	free(filepath);
 	free_path(path);
 	freedouble(args);
+	return (0);
+}
+*/
+
+int main(int argc, char *argv[])
+{
+	path_t *path;
+
+	path = getpath();
+
+	free_path(path);
 	return (0);
 }
 

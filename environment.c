@@ -8,8 +8,8 @@
 
 char *_getenv(char *name)
 {
-	int i = 0, len = _strlen(name);
-	char *copy;
+	int i = 0, len = _strlen(name), count = 0;
+	char *copy, *out;
 
 	while (environ[i])
 	{
@@ -17,7 +17,10 @@ char *_getenv(char *name)
 		{
 			copy = _strdup(environ[i]);
 			copy += ++len;
-			return (copy);
+			out = _strdup(copy);
+			copy -= len;
+			free(copy);
+			return (out);
 		}
 		i++;
 		}
@@ -55,7 +58,6 @@ path_t *add_path_node(path_t **head, char *str)
 
 		ptrCopy->nextdir = new;
 	}
-	free(new);
 	return (*head);
 }
 
@@ -88,10 +90,12 @@ int delimcount(char *buffer)
 
 path_t *getpath(void)
 {
-	char *pathString = _getenv("PATH");
-	char *token = strtok(pathString, ":");
+	char *pathString, *token;
 	path_t *head = NULL;
 
+
+	pathString = _getenv("PATH");
+	token = strtok(pathString, ":");
 	head = add_path_node(&head, token);
 
 	while (token)
@@ -99,6 +103,7 @@ path_t *getpath(void)
 		token = strtok(NULL, ":");
 		add_path_node(&head, token);
 	}
+	free(pathString);
 	free(token);
 	return (head);
 }
