@@ -26,6 +26,11 @@ char **user_console(void)
 			free(buffer);
 			return (NULL);
 		}
+		if (_strcmp(strntok(buffer, " \n"), "exit", 4) == 0)
+		{
+			free(buffer);
+			return (NULL);
+		}
 		isKid = fork();
 		if (isKid == 0)
 			break;
