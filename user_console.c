@@ -27,8 +27,8 @@ char **user_console(void)
 		return (NULL);
 
 	args = parse_user_input(buffer);
-	args = built_ins(args);
-
+/*	args = built_ins(args);
+*/
 	return (args);
 }
 

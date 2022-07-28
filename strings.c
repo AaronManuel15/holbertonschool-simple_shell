@@ -135,6 +135,6 @@ char *copycat(char *s1, char *s2)
 	for (j = 0; s2[j]; j++, i++)
 		newStr[i] = s2[j];
 	newStr[i] = '\0';
-
+	
 	return (newStr);
 }

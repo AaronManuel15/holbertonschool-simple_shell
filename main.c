@@ -55,9 +55,29 @@
 int main(int argc, char *argv[])
 {
 	path_t *path;
+	char **args, *filepath;
+	int isKid, status;
 
 	path = getpath();
 
+	if (argc == 1)
+		args = user_console();
+
+	filepath = _which(args[0], path);	
+
+	isKid = fork();
+	if (isKid == -1)
+		return (-1);
+	if (isKid == 0)
+	{
+		if (execve(filepath, args, NULL) == -1)
+			return (-1);
+	}
+
+	wait(&status);
+
+	free(filepath);
+	freedouble(args);	
 	free_path(path);
 	return (0);
 }
@@ -72,6 +92,7 @@ int main(int argc, char *argv[])
  *	(used for error handling)
  */
 
+/*
 void executer(char *filepath, char *filename, char **args, int lineno)
 {
 	if (filepath == NULL)
@@ -83,7 +104,7 @@ void executer(char *filepath, char *filename, char **args, int lineno)
 	if (execve(filepath, args, NULL) == -1)
 		error(filename, lineno, args[0]);
 }
-
+*/
 
 
 
