@@ -8,7 +8,7 @@
 
 char *_getenv(char *name)
 {
-	int i = 0, len = _strlen(name), count = 0;
+	int i = 0, len = _strlen(name);
 	char *copy, *out;
 
 	while (environ[i])
