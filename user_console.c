@@ -62,6 +62,11 @@ char **parse_user_input(char *str)
 	}
 
 	tokens = malloc(sizeof(*tokens) * (count + 1));
+	if (!tokens)
+	{
+		free(tokens);
+		exit(1);
+	}
 
 	count = 0;
 	token = strtok(strCpy, " ");
@@ -75,6 +80,7 @@ char **parse_user_input(char *str)
 
 	free(str);
 	free(strCpy);
+	free(token);
 	return (tokens);
 }
 

@@ -17,6 +17,7 @@ void error(char *filename, int lineno, char *argument)
 	errorStr = copycat(errorStr, ": ");
 	errorStr = copycat(errorStr, argument);
 
+	free(num);
 	perror(errorStr);
 }
 

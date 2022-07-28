@@ -99,6 +99,7 @@ path_t *getpath(void)
 		token = strtok(NULL, ":");
 		add_path_node(&head, token);
 	}
+	free(pathString);
 	return (head);
 }
 
@@ -120,10 +121,13 @@ char *_which(char *token, path_t *head)
 	{
 		if (stat(exec, &st) == 0)
 		{
+			free(command);
 			return (exec);
 		}
 		exec = copycat(ptrCopy->directory, command);
 		ptrCopy = ptrCopy->nextdir;
 	}
+	free(command);
+	free(exec);
 	return (NULL);
 }
