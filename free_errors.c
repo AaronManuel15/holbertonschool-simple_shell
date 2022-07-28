@@ -85,10 +85,10 @@ void free_path(path_t *head)
 	while (temp)
 	{
 		temp2 = temp->nextdir;
+		free(temp->directory);
 		free(temp);
 		temp = temp2;
 	}
-	free(head);
 }
 
 
