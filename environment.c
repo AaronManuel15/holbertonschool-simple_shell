@@ -55,7 +55,8 @@ path_t *add_path_node(path_t **head, char *str)
 
 		ptrCopy->nextdir = new;
 	}
-
+	free(new->directory);
+	free(new);
 	return (*head);
 }
 
@@ -99,7 +100,7 @@ path_t *getpath(void)
 		token = strtok(NULL, ":");
 		add_path_node(&head, token);
 	}
-	free(pathString);
+	free(token);
 	return (head);
 }
 

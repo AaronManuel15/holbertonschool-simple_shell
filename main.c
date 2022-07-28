@@ -20,8 +20,10 @@ int main(int argc, char *argv[])
 		wait(&status);
 		args = user_console();
 		if (args == NULL)
+		{
+			freedouble(args);
 			continue;
-
+		}
 		filepath = _strdup(_which(args[0], path));
 		isKid = fork();
 	}
@@ -31,8 +33,10 @@ int main(int argc, char *argv[])
 	{
 		args = malloc((argc - 1) * sizeof(*args));
 		if (args == NULL)
+		{
+			free(args);
 			return (0);
-
+		}
 		while (argv[i + 1] != NULL)
 		{
 			args[i] = _strdup(argv[i + 1]);
