@@ -37,7 +37,8 @@ char *intstr(int num)
 		len++;
 	}
 
-	temp = malloc(sizeof(char) * len);
+	temp = malloc(sizeof(char) * (len + 1));
+	output = malloc(sizeof(char) * (len + 1));
 	if (temp == NULL)
 	{
 		free(temp);
@@ -48,9 +49,10 @@ char *intstr(int num)
 		temp[i] = (num % 10) + '0';
 		num /= 10;
 	}
-	output = malloc(sizeof(*temp));
 	for (i -= 1, j = 0; i >= 0; i--, j++)
 		output[j] = temp[i];
+
+	output[j] = '\0';
 
 	free(temp);
 	return (output);
@@ -69,3 +71,24 @@ void freedouble(char **arr)
 		free(arr[i]);
 	free(arr);
 }
+
+/**
+ * free_path - Frees the path list
+ * @head: pointer to head node
+ */
+
+void free_path(path_t *head)
+{
+	path_t *temp, *temp2;
+
+	temp = head;
+	while (temp)
+	{
+		temp2 = temp->nextdir;
+		free(temp);
+		temp = temp2;
+	}
+	free(head);
+}
+
+

@@ -52,5 +52,6 @@ char **built_ins(char **args);
 void error(char *filename, int lineno, char *argument);
 char *intstr(int num);
 void freedouble(char **arr);
+void free_path(path_t *head);
 
 #endif

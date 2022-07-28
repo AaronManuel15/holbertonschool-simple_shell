@@ -42,6 +42,7 @@ int main(int argc, char *argv[])
 	}
 	executer(filepath, argv[0], args, lineno);
 	free(filepath);
+	free_path(path);
 	freedouble(args);
 	return (0);
 }
