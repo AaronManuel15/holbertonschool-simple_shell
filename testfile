@@ -1,0 +1,3 @@
+ls
+ls -l
+/bin/ls /var

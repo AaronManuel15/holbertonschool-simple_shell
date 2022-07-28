@@ -56,25 +56,38 @@ int main(int argc, char *argv[])
 {
 	path_t *path;
 	char **args, *filepath;
-	int isKid, status;
+	int i;
 
 	path = getpath();
 
 	if (argc == 1)
-		args = user_console();
-
-	filepath = _which(args[0], path);	
-
-	isKid = fork();
-	if (isKid == -1)
-		return (-1);
-	if (isKid == 0)
 	{
-		if (execve(filepath, args, NULL) == -1)
+		args = user_console();
+		if (args == NULL)
+		{
+			free_path(path);
+			return (0);
+		}
+	}
+	
+	if (argc != 1)
+	{
+		args = malloc(sizeof(*args) * argc);
+		if (args == NULL)
 			return (-1);
+		i = 0;
+		while (argv[i + 1] != NULL)
+		{
+			args[i] = _strdup(argv[i + 1]);
+			i++;
+		}
+		args[i] = NULL;
 	}
 
-	wait(&status);
+	filepath = _which(args[0], path);
+
+	if (execve(filepath, args, NULL) == -1)
+		return (-1);
 
 	free(filepath);
 	freedouble(args);	

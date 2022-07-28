@@ -9,26 +9,28 @@ char **user_console(void)
 {
 	char *buffer = NULL, **args;
 	size_t buffsize = 0;
-	int count;
-
-	if (isatty(STDIN_FILENO) != 0)
-		write(STDIN_FILENO, "($) ", 4);
-
-	count = getline(&buffer, &buffsize, stdin);
-	if (count == EOF)
+	int count, status;
+	pid_t isKid = 1;
+	
+	while (isKid != 0)
 	{
+		wait(&status);
 		if (isatty(STDIN_FILENO) != 0)
+			write(STDIN_FILENO, "($) ", 4);
+	
+		count = getline(&buffer, &buffsize, stdin);
+		if (count == EOF)
 		{
+			if (isatty(STDIN_FILENO) != 0)
+				write(STDOUT_FILENO, "\n", 1);
 			free(buffer);
-			write(STDOUT_FILENO, "\n", 1);
+			return (NULL);
 		}
-		exit(0);
+		isKid = fork();
+		if (isKid == 0)
+			break;
 	}
-	if (_strcmp(buffer, "\n") == 0)
-	{
-		free(buffer);
-		return (NULL);
-	}
+
 	args = parse_user_input(buffer);
 /*	args = built_ins(args);
 */
