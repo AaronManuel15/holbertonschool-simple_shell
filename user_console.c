@@ -15,20 +15,23 @@ char **user_console(void)
 		write(STDIN_FILENO, "($) ", 4);
 
 	count = getline(&buffer, &buffsize, stdin);
-
 	if (count == EOF)
 	{
 		if (isatty(STDIN_FILENO) != 0)
+		{
+			free(buffer);
 			write(STDOUT_FILENO, "\n", 1);
+		}
 		exit(0);
 	}
-
 	if (_strcmp(buffer, "\n") == 0)
+	{
+		free(buffer);
 		return (NULL);
-
+	}
 	args = parse_user_input(buffer);
 	args = built_ins(args);
-
+	free(buffer);
 	return (args);
 }
 
@@ -53,21 +56,18 @@ char **parse_user_input(char *str)
 		}
 		i++;
 	}
-
 	token = strtok(str, " ");
 	while (token != NULL)
 	{
 		count++;
 		token = strtok(NULL, " ");
 	}
-
 	tokens = malloc(sizeof(*tokens) * (count + 1));
 	if (!tokens)
 	{
 		free(tokens);
 		exit(1);
 	}
-
 	count = 0;
 	token = strtok(strCpy, " ");
 	while (token != NULL)
