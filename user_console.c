@@ -32,6 +32,7 @@ char **user_console(void)
 	}
 
 	args = parse_user_input(buffer);
+	args = built_ins(args);
 
 	return (args);
 }
@@ -96,16 +97,9 @@ char **built_ins(char **args)
 	if (args == NULL)
 		return (NULL);
 
-	if (_strcmp(args[0], "exit") == 0)
-	{
-		free(args[0]);
-		free(args);
-		exit(0);
-	}
 	if (_strcmp(args[0], "env") == 0)
 	{
-		free(args[0]);
-		free(args);
+		freedouble(args);
 		printenv();
 		return (NULL);
 	}
