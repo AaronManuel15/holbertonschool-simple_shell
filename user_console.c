@@ -33,7 +33,7 @@ char **user_console(void)
 }
 
 /**
- * parse_input - cleans input into usable arguments
+ * parse_user_input - cleans input into usable arguments
  * @str: input string
  * Return: parsed string
  */
