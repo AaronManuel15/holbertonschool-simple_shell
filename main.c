@@ -15,28 +15,18 @@ int main(int argc, char *argv[])
 	int i = 0, isKid = 1, status, lineno = 0;
 
 	path = getpath();
-	while ((isKid != 0) && (argc == 1))
+	for (lineno = 1; (isKid != 0) && (argc == 1); lineno++)
 	{
 		wait(&status);
-		lineno++;
-		if (isatty(STDIN_FILENO) != 0)
-			args = user_console();
-		else
-		{
-			args = non_interactive_mode();
-			filepath = _strdup(_which(args[0], path));
-			break;
-		}
-		filepath = _strdup(_which(args[0], path));
-		if (filepath == NULL)
-		{
-			error(argv[0], lineno, args[0]);
+		args = user_console();
+		if (args == NULL)
 			continue;
-		}
+
+		filepath = _strdup(_which(args[0], path));
 		isKid = fork();
 	}
 	if (isKid == -1)
-		perror("Error");
+		error(argv[0], lineno, args[0]);
 	if (argc > 1)
 	{
 		args = malloc((argc - 1) * sizeof(*args));
@@ -50,38 +40,33 @@ int main(int argc, char *argv[])
 		}
 		filepath = _strdup(_which(args[0], path));
 	}
-
-	/* Test section */
-	printf("Attempting to execute %s\n", args[0]);
-	if (execve(filepath, args, NULL) == -1)
-		perror("error");
-	/* End test section */
-	freeargs(args);
+	executer(filepath, argv[0], args, lineno);
+	free(filepath);
+	freedouble(args);
 	return (0);
 }
 
-char **non_interactive_mode(void)
+/**
+ * executer - executes files in the path
+ * @filepath: filepath to execute
+ * @filename: name of program in argv[0]
+ *	(used for error handling)
+ * @args: double array containing flags and arguments for filepath
+ * @lineno: number of commands that have been entered to the shell
+ *	(used for error handling)
+ */
+
+void executer(char *filepath, char *filename, char **args, int lineno)
 {
-	char *buffer = NULL, **args;
-	size_t buffsize = 0;
+	if (filepath == NULL)
+	{
+		error(filename, lineno, args[0]);
+		exit(0);
+	}
 
-	getline(&buffer, &buffsize, stdin);
-
-	args = parse_input(buffer);
-	return (args);
+	if (execve(filepath, args, NULL) == -1)
+		error(filename, lineno, args[0]);
 }
-
-void freeargs(char **args)
-{
-	int i;
-
-	for (i = 0; args[i]; i++)
-		free(args[i]);
-	free(args);
-}
-
-
-
 
 
 
