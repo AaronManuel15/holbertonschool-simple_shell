@@ -39,9 +39,14 @@ int main(int argc, char *argv[])
 	}
 
 	filepath = _which(args[0], path);
-
-	if (execve(filepath, args, NULL) == -1)
-		return (-1);
+	if (filepath)
+	{
+		if (execve(filepath, args, NULL) == -1)
+		{
+			perror("error");
+			return (-1);
+		}
+	}
 
 	free(filepath);
 	freedouble(args);

@@ -26,7 +26,7 @@ char **user_console(void)
 			free(buffer);
 			return (NULL);
 		}
-		if (_strncmp(strtok(buffer, " \n"), "exit", 4) == 0)
+		if (_strcmp(strtok(buffer, " \n"), "exit") == 0)
 		{
 			free(buffer);
 			return (NULL);
